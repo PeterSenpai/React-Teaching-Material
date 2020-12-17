@@ -1,5 +1,6 @@
 import "./App.css";
-import TodoList from "./TodoList";
+// import TodoList from "./TodoList";
+import Temp from "./TodoList";
 import React from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -27,7 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <TodoList margin="10px"></TodoList>
+        <Temp margin="10px"></Temp>
       </Container>
     </ThemeProvider>
   );
