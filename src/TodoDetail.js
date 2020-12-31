@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TodoDetail({ todos }) {
+function TodoDetail({ todos }) {
   const classes = useStyles();
   let { id } = useParams();
 
@@ -55,3 +55,4 @@ export default function TodoDetail({ todos }) {
     </Card>
   );
 }
+export default TodoDetail;

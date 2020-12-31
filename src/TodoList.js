@@ -4,6 +4,9 @@ import List from "@material-ui/core/List";
 import TextField from "@material-ui/core/TextField";
 import TodoItem from "./TodoItem";
 
+import { connect } from "react-redux";
+import { actions } from "./redux/actions/todos";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -32,52 +35,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TodoList({
-  todos,
-  handleDelete,
-  handleKeyDown,
-  handleToggle,
-}) {
+function TodoList({ todos, addToDo, handleDelete, handleToggle }) {
   const classes = useStyles();
 
-  // const [todos, setTodos] = useState([
-  //   { id: 0, task: "Homework", status: "pending" },
-  //   { id: 2, task: "Lunch", status: "done" },
-  //   { id: 1, task: "Dinner", status: "pending" },
-  // ]);
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      addToDo(e.target.value);
 
-  // const handleToggle = (id) => () => {
-  //   const newTodos = todos.map((todo) => {
-  //     if (todo.id === id) {
-  //       return {
-  //         ...todo,
-  //         status: todo.status === "pending" ? "done" : "pending",
-  //       };
-  //     } else {
-  //       return todo;
-  //     }
-  //   });
-  //   setTodos(newTodos);
-  // };
-
-  // const handleDelete = (id) => () => {
-  //   const newTodos = todos.filter((todo) => {
-  //     return todo.id !== id;
-  //   });
-  //   setTodos(newTodos);
-  // };
-
-  // const handleKeyDown = (e) => {
-  //   if (e.keyCode === 13) {
-  //     const newTodos = [
-  //       ...todos,
-  //       { id: nanoid(10), task: e.target.value, status: "pending" },
-  //     ];
-  //     setTodos(newTodos);
-
-  //     e.target.value = "";
-  //   }
-  // };
+      e.target.value = "";
+    }
+  };
 
   return (
     <>
@@ -106,3 +73,15 @@ export default function TodoList({
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+  };
+};
+
+const mapActionToProps = {
+  addToDo: actions.addTodo,
+};
+
+export default connect(mapStateToProps, mapActionToProps)(TodoList);
