@@ -37,7 +37,7 @@ function App() {
             </Route>
 
             <Route exact path="/todo/:id">
-              {/* <TodoDetail todos={todos}></TodoDetail> */}
+              <TodoDetail></TodoDetail>
             </Route>
           </Switch>
         </Router>

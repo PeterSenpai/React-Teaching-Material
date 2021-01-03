@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
 
 import { useParams } from "react-router-dom";
 
@@ -55,4 +56,11 @@ function TodoDetail({ todos }) {
     </Card>
   );
 }
-export default TodoDetail;
+
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+  };
+};
+
+export default connect(mapStateToProps)(TodoDetail);
