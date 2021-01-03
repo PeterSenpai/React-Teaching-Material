@@ -3,9 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import TextField from "@material-ui/core/TextField";
 import TodoItem from "./TodoItem";
-
-import { connect } from "react-redux";
-import { actions } from "./redux/actions/todos";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, selectTodos } from "./redux/slices/todosSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TodoList({ todos, addToDo, handleDelete, handleToggle }) {
+function TodoList(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const todos = useSelector(selectTodos);
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      addToDo(e.target.value);
+      dispatch(addTodo(e.target.value));
 
       e.target.value = "";
     }
@@ -64,8 +65,6 @@ function TodoList({ todos, addToDo, handleDelete, handleToggle }) {
               todo={todo.task}
               id={todo.id}
               status={todo.status}
-              handleToggle={handleToggle}
-              handleDelete={handleDelete}
             ></TodoItem>
           );
         })}
@@ -74,14 +73,4 @@ function TodoList({ todos, addToDo, handleDelete, handleToggle }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    todos: state.todos,
-  };
-};
-
-const mapActionToProps = {
-  addToDo: actions.addTodo,
-};
-
-export default connect(mapStateToProps, mapActionToProps)(TodoList);
+export default TodoList;

@@ -8,16 +8,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { actions } from "./redux/actions/todos";
+import { useDispatch } from "react-redux";
+import { toggleTodo, deleteTodo } from "./redux/slices/todosSlice";
 
-function TodoItem({ deleteTodo, toggleTodo, todo, id, status }) {
+function TodoItem({ todo, id, status }) {
+  const dispatch = useDispatch();
   return (
     <ListItem key={id} role={undefined} dense button>
       <ListItemIcon>
         <Checkbox
           onClick={() => {
-            toggleTodo(id);
+            dispatch(toggleTodo(id));
           }}
           edge="start"
           checked={status === "done"}
@@ -37,7 +38,7 @@ function TodoItem({ deleteTodo, toggleTodo, todo, id, status }) {
           edge="end"
           aria-label="comments"
           onClick={() => {
-            deleteTodo(id);
+            dispatch(deleteTodo(id));
           }}
         >
           <DeleteIcon />
@@ -47,9 +48,4 @@ function TodoItem({ deleteTodo, toggleTodo, todo, id, status }) {
   );
 }
 
-const mapActionToProps = {
-  deleteTodo: actions.deleteTodo,
-  toggleTodo: actions.toggleTodo,
-};
-
-export default connect(null, mapActionToProps)(TodoItem);
+export default TodoItem;

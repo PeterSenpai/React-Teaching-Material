@@ -1,5 +1,9 @@
-import { createStore } from "redux";
-import rootReducer from "./reducers";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { configureStore } from "@reduxjs/toolkit";
+import todosReducers from "./slices/todosSlice";
 
-export default createStore(rootReducer, composeWithDevTools());
+export default configureStore({
+  reducer: {
+    todos: todosReducers,
+  },
+  devTools: true,
+});
