@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import TextField from "@material-ui/core/TextField";
 import TodoItem from "./TodoItem";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, selectTodos } from "./redux/slices/todosSlice";
+import { loadTodos, addTodo, selectTodos } from "./redux/slices/todosSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +39,13 @@ function TodoList(props) {
   const dispatch = useDispatch();
   const todos = useSelector(selectTodos);
 
+  useEffect(() => {
+    dispatch(loadTodos());
+  }, []);
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
-      dispatch(addTodo(e.target.value));
+      dispatch(addTodo({ task: e.target.value, status: false }));
 
       e.target.value = "";
     }
